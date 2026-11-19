@@ -53,3 +53,554 @@ window.DELIVERY_REQUIREMENTS=[{
  '导出与当前成功查询使用同一统计截至时间，包含所选范围全部每日记录。'
  ]}
 }];
+
+window.DELIVERY_REQUIREMENTS.push({
+  "id": "FR-wenkf-002",
+  "name": "用户提交工单与统一工单处理",
+  "description": "用户填写表单提交反馈，自动指派客服，在现有工单处理统一流转并公开处理结果。",
+  "status": "待评审",
+  "updated": "2026-11-20",
+  "version": "V1.2",
+  "business": "在线客服",
+  "scope": "管理后台 + 移动端H5 · 沿用现有用户身份",
+  "documents": [
+    {
+      "name": "需求单",
+      "file": "../01-需求档案/FR-wenkf-002-用户工单/01-需求单/需求单.md",
+      "description": "业务范围与已确认口径"
+    },
+    {
+      "name": "PRD",
+      "file": "../01-需求档案/FR-wenkf-002-用户工单/02-PRD/PRD.md",
+      "description": "统一处理、模板及用户提交规则"
+    },
+    {
+      "name": "UX设计需求表",
+      "file": "../01-需求档案/FR-wenkf-002-用户工单/03-UX设计/UX设计需求表.md",
+      "description": "页面、交互与状态设计"
+    }
+  ],
+  "clients": [
+    {
+      "id": "admin",
+      "name": "管理后台",
+      "icon": "▣",
+      "viewport": "desktop",
+      "rules": [
+        {
+          "title": "统一入口与来源",
+          "items": [
+            "复用现有工单处理列表和详情，以来源区分客服创建和用户提交，不新增独立用户工单处理菜单。",
+            "来源、归属、状态和关键词组合查询；来源不会因移交或完结改变。",
+            "客服创建工单保留原权限、接收与处理流程，不强制套用用户表单。"
+          ]
+        },
+        {
+          "title": "权限与流转",
+          "items": [
+            "管理员可查看授权范围内全部用户工单，移交、完结及配置模板；默认指派给我，可切换全部。",
+            "普通客服仅查看和处理当前指派给自己的用户工单；移交后原客服失去访问权限。",
+            "用户提交和移交后均直接处理中，无需接收；已完结用户工单只读。"
+          ]
+        },
+        {
+          "title": "表单模板",
+          "items": [
+            "仅管理员创建类型；每个模板配置一个有效默认处理人，用户提交后自动指派。",
+            "字段支持文本、单选项、多选项、图片、视频、长文本；可配置顺序、选项及是否必填。",
+            "保存成功的模板可在H5选择；默认处理人不可用时不创建无处理人的工单。"
+          ]
+        },
+        {
+          "title": "沿用现有完结弹窗",
+          "items": [
+            "处理结果为已解决、未解决或转需求，默认已解决；三种分类均使工单完结，转需求不自动创建产品需求。",
+            "内部处理结论、处理依据／验证记录、面向用户的结果说明均必填；前两项仅后台可见。",
+            "用户仅看到处理分类和面向用户的结果说明；管理员代完结不改变当前处理人。",
+            "本次不扩展FR-wenkf-001统计口径；原型权限及异常仅为模拟。"
+          ]
+        }
+      ],
+      "scenes": [
+        {
+          "id": "unified-list",
+          "name": "统一工单列表",
+          "description": "客服创建与用户提交在同一列表处理",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=unified-list"
+        },
+        {
+          "id": "source-query",
+          "name": "来源组合查询",
+          "description": "来源、归属、状态与关键词筛选",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=source-query"
+        },
+        {
+          "id": "user-detail",
+          "name": "用户工单详情",
+          "description": "提交内容、附件及处理记录",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=user-detail"
+        },
+        {
+          "id": "transfer",
+          "name": "移交工单",
+          "description": "移交后保持处理中，无需接收",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=transfer"
+        },
+        {
+          "id": "finish",
+          "name": "完结工单",
+          "description": "沿用现有弹窗，分别填写内部和公开说明",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=finish"
+        },
+        {
+          "id": "templates",
+          "name": "工单类型配置",
+          "description": "管理员查看模板及默认处理人",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=templates"
+        },
+        {
+          "id": "template-create",
+          "name": "创建表单模板",
+          "description": "六类字段、必填项及单一处理人",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=template-create"
+        },
+        {
+          "id": "legacy-detail",
+          "name": "原客服工单·待接收",
+          "description": "保留原有接收流程",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=legacy-detail"
+        },
+        {
+          "id": "legacy-processing",
+          "name": "原客服工单·处理中",
+          "description": "保留既有操作与详情",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=legacy-processing"
+        },
+        {
+          "id": "legacy-completed",
+          "name": "原客服工单·已完结",
+          "description": "查看既有完结内容",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=legacy-completed"
+        },
+        {
+          "id": "admin-errors",
+          "name": "查询失败与恢复",
+          "description": "失败提示及重试",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=admin-errors"
+        },
+        {
+          "id": "empty",
+          "name": "筛选无结果",
+          "description": "调整查询条件后重试",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=empty"
+        },
+        {
+          "id": "permission",
+          "name": "无访问权限",
+          "description": "阻断无权限访问",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=permission"
+        },
+        {
+          "id": "loading",
+          "name": "加载中",
+          "description": "查询加载占位",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=admin&scene=loading"
+        }
+      ]
+    },
+    {
+      "id": "h5",
+      "name": "移动端H5",
+      "icon": "▯",
+      "viewport": "mobile",
+      "rules": [
+        {
+          "title": "入口与身份",
+          "items": [
+            "在快捷问题金刚区下方、常见问题上方增加工单记录和提交工单反馈卡片，保留人工客服入口。",
+            "沿用现有客服用户身份；仅可查看本人主动提交的工单，不展示关联本人的客服内部工单。"
+          ]
+        },
+        {
+          "title": "填写与提交",
+          "items": [
+            "先选择后台已配置的反馈类型，再填写对应表单；必填规则与模板一致，选填字段可留空。",
+            "支持文本、选择、图片、视频及长文本；未完成或失败的附件需处理后提交。",
+            "成功后自动指派模板处理人，直接进入处理中；成功页展示工单编号并可查看详情。",
+            "无可用模板或默认处理人不可用时不创建工单；提交结果未知时核实同次提交，避免重复创建。"
+          ]
+        },
+        {
+          "title": "记录与处理结果",
+          "items": [
+            "记录仅展示处理中、已完结两种状态；可查看提交内容及附件。",
+            "完结后展示处理分类及面向用户的结果说明，不公开内部处理结论、验证记录和后台操作日志。",
+            "用户不能移交或完结工单，也不能访问其他用户或客服创建工单的详情与附件。"
+          ]
+        }
+      ],
+      "scenes": [
+        {
+          "id": "home",
+          "name": "客服首页",
+          "description": "快捷问题下方新增记录和反馈卡片",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=home"
+        },
+        {
+          "id": "type-select",
+          "name": "选择反馈类型",
+          "description": "选择后台配置的表单模板",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=type-select"
+        },
+        {
+          "id": "form",
+          "name": "填写反馈表单",
+          "description": "文本、选择、图片及视频输入",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=form"
+        },
+        {
+          "id": "submit-success",
+          "name": "提交成功",
+          "description": "确认编号，进入工单详情",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=submit-success"
+        },
+        {
+          "id": "records",
+          "name": "工单记录",
+          "description": "仅查看本人提交，可按状态筛选",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=records"
+        },
+        {
+          "id": "record-detail",
+          "name": "处理中详情",
+          "description": "查看提交内容及当前处理状态",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=record-detail"
+        },
+        {
+          "id": "completed-detail",
+          "name": "已完结与处理结果",
+          "description": "展示处理分类及面向用户的说明",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=completed-detail"
+        },
+        {
+          "id": "mobile-errors",
+          "name": "上传失败与重试",
+          "description": "保留表单内容并恢复上传",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=mobile-errors"
+        },
+        {
+          "id": "no-types",
+          "name": "暂无反馈类型",
+          "description": "无模板时不允许提交",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=no-types"
+        },
+        {
+          "id": "no-records",
+          "name": "暂无工单记录",
+          "description": "引导提交反馈",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=no-records"
+        },
+        {
+          "id": "permission",
+          "name": "工单不可访问",
+          "description": "不可查看他人或内部客服工单",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-002-用户工单/04-静态Demo/FR-wenkf-002-用户工单Demo.html?client=h5&scene=permission"
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "title": "用户提交工单与统一处理流程",
+    "description": "模板配置、H5申请、后台处理与用户回查；客服创建工单沿用原流程。",
+    "height": 1110,
+    "nodes": [
+      {
+        "id": "template",
+        "x": 410,
+        "y": 30,
+        "w": 280,
+        "h": 66,
+        "label": "管理员：配置工单类型",
+        "sub": "六类字段、必填与一个默认处理人",
+        "client": "admin",
+        "scene": "template-create",
+        "kind": "action"
+      },
+      {
+        "id": "home",
+        "x": 410,
+        "y": 140,
+        "w": 280,
+        "h": 66,
+        "label": "用户：进入H5提交反馈",
+        "sub": "快捷问题下方的新增卡片",
+        "client": "h5",
+        "scene": "home",
+        "kind": "action"
+      },
+      {
+        "id": "form",
+        "x": 410,
+        "y": 250,
+        "w": 280,
+        "h": 66,
+        "label": "用户：选类型并填写表单",
+        "sub": "沿用现有用户身份",
+        "client": "h5",
+        "scene": "form",
+        "kind": "action"
+      },
+      {
+        "id": "error",
+        "x": 35,
+        "y": 360,
+        "w": 280,
+        "h": 66,
+        "label": "提交未成功：保留填写内容",
+        "sub": "必填、上传或处理人不可用时修正重试",
+        "client": "h5",
+        "scene": "mobile-errors",
+        "kind": "blocked"
+      },
+      {
+        "id": "submit",
+        "x": 410,
+        "y": 360,
+        "w": 280,
+        "h": 66,
+        "label": "校验成功：创建并自动指派",
+        "sub": "来源为用户提交，直接处理中",
+        "client": "h5",
+        "scene": "submit-success",
+        "kind": "system"
+      },
+      {
+        "id": "list",
+        "x": 410,
+        "y": 470,
+        "w": 280,
+        "h": 66,
+        "label": "客服：在原工单处理统一处理",
+        "sub": "来源筛选，管理员全部／指派给我",
+        "client": "admin",
+        "scene": "unified-list",
+        "kind": "action"
+      },
+      {
+        "id": "legacy",
+        "x": 785,
+        "y": 470,
+        "w": 280,
+        "h": 66,
+        "label": "客服创建工单沿用原流程",
+        "sub": "保留待接收，不自动公开到H5",
+        "client": "admin",
+        "scene": "legacy-detail",
+        "kind": "neutral"
+      },
+      {
+        "id": "detail",
+        "x": 410,
+        "y": 580,
+        "w": 280,
+        "h": 66,
+        "label": "客服：查看提交内容与附件",
+        "sub": "普通客服仅可处理当前指派给自己的工单",
+        "client": "admin",
+        "scene": "user-detail",
+        "kind": "action"
+      },
+      {
+        "id": "transfer",
+        "x": 35,
+        "y": 690,
+        "w": 280,
+        "h": 66,
+        "label": "移交其他客服",
+        "sub": "保持处理中，原普通客服失去访问权",
+        "client": "admin",
+        "scene": "transfer",
+        "kind": "action"
+      },
+      {
+        "id": "finish",
+        "x": 410,
+        "y": 800,
+        "w": 280,
+        "h": 66,
+        "label": "客服或管理员：填写完结弹窗",
+        "sub": "已解决／未解决／转需求；三项说明必填",
+        "client": "admin",
+        "scene": "finish",
+        "kind": "action"
+      },
+      {
+        "id": "done",
+        "x": 410,
+        "y": 910,
+        "w": 280,
+        "h": 66,
+        "label": "完结成功：状态更新为已完结",
+        "sub": "分类与说明一并保存，不自动创建需求",
+        "client": "h5",
+        "scene": "completed-detail",
+        "kind": "system"
+      },
+      {
+        "id": "history",
+        "x": 410,
+        "y": 1020,
+        "w": 280,
+        "h": 66,
+        "label": "用户：从工单记录查看结果",
+        "sub": "仅本人提交；展示分类和公开说明",
+        "client": "h5",
+        "scene": "records",
+        "kind": "action"
+      },
+      {
+        "id": "private",
+        "x": 785,
+        "y": 910,
+        "w": 280,
+        "h": 66,
+        "label": "内部信息仅后台可见",
+        "sub": "内部处理结论、处理依据／验证记录",
+        "client": "admin",
+        "scene": "user-detail",
+        "kind": "neutral"
+      }
+    ],
+    "edges": [
+      {
+        "d": "M550 96 V140",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 206 V250",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 316 V360",
+        "label": "有效",
+        "x": 575,
+        "y": 342,
+        "negative": false
+      },
+      {
+        "d": "M410 283 H175 V360",
+        "label": "校验失败",
+        "x": 220,
+        "y": 272,
+        "negative": true
+      },
+      {
+        "d": "M175 360 V330 H410",
+        "label": "修正重试",
+        "x": 225,
+        "y": 348,
+        "negative": false
+      },
+      {
+        "d": "M550 426 V470",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M785 503 H690",
+        "label": "同一列表",
+        "x": 740,
+        "y": 490,
+        "negative": false
+      },
+      {
+        "d": "M550 536 V580",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 646 V800",
+        "label": "直接完结",
+        "x": 595,
+        "y": 735,
+        "negative": false
+      },
+      {
+        "d": "M410 613 H175 V690",
+        "label": "需要移交",
+        "x": 230,
+        "y": 601,
+        "negative": false
+      },
+      {
+        "d": "M175 756 V773 H390 V613 H410",
+        "label": "新处理人继续处理",
+        "x": 210,
+        "y": 795,
+        "negative": false
+      },
+      {
+        "d": "M550 866 V910",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 976 V1020",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M690 943 H785",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      }
+    ],
+    "notes": [
+      "管理员配置单一默认处理人；表单校验或处理人不可用时保留输入并提示恢复，不创建未指派工单。",
+      "用户提交及移交均直接处理中，无需接收；普通客服仅可处理当前指派工单。",
+      "完结三项说明均必填；内部处理信息不对用户公开，未解决／转需求同样结束工单。",
+      "H5仅展示当前用户主动提交的工单及公开结果；客服创建工单沿用原流程。"
+    ]
+  }
+});
