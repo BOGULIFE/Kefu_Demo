@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>右豹 · 客服详细数据 Demo</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="embed.css"></head>
+<body>
+<aside class="sidebar">
+ <div class="brand"><span class="brand-mark">豹</span><div><strong>右豹</strong><small>服务每一个真实问题</small></div></div>
+ <nav aria-label="后台导航" id="navigation"></nav>
+ <div class="side-foot"><span class="dot green"></span> 人工服务 · AI 流程占位<small>YOU BAO SERVICE CONSOLE</small></div>
+</aside>
+<header class="topbar"><div class="crumb"><button class="icon-btn" aria-label="折叠导航" id="collapse">☰</button><span>右豹</span><i>/</i><button class="text quiet" id="crumb-list">客服列表</button><span id="crumb-detail" hidden><i>/</i> 客服详细数据</span></div><div class="top-actions"><button data-placeholder>♧ 消息</button><span class="org">右豹 <span>⌄</span></span><button class="text quiet" data-placeholder>用户 H5 ↗</button><div class="account"><b>产品大仙</b><small>管理员 / 客服 / 研发 / 市场 / 运营 / 产品</small></div><button data-placeholder>修改密码</button><button data-placeholder>退出登录</button></div></header>
+<main id="main"></main>
+<div class="demo-tools"><button id="demo-toggle">◈ 原型演示 <span>FR-wenkf-001</span></button><div id="demo-panel" hidden><b>演示辅助 · 非产品功能</b><p>数据为本地模拟，演示日期固定为2026-11-19。</p><label for="scene">查看页面状态</label><select id="scene"><option value="normal">正常数据</option><option value="zero">全0日期范围</option><option value="loading">查询加载中</option><option value="error">查询失败</option><option value="pageError">翻页失败</option><option value="expired">统计结果失效</option><option value="permission">无模块权限</option><option value="missing">客服不可访问</option><option value="exportFail">下一次导出失败</option></select><p>点击「详细数据」可进入详情。导出生成带演示标识的示例Excel。</p></div></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="capacity"><form method="dialog"><div class="dialog-head"><h2>调整容量</h2><button value="cancel" class="icon-btn" aria-label="关闭">×</button></div><p id="capacity-name"></p><label>接待配额 <input id="capacity-value" type="number" min="1" max="99" required></label><p class="muted">原有操作示意，仅修改本地演示数据。</p><div class="dialog-actions"><button value="cancel">取消</button><button type="button" class="primary" id="capacity-save">保存</button></div></form></dialog>
+<script src="app.js"></script></body></html>

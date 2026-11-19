@@ -1,0 +1,9 @@
+/* Optional content-only mode for the delivery portal. Standalone demo is unchanged. */
+body.embedded .sidebar,body.embedded .topbar,body.embedded .demo-tools,body.embedded .footer-note{display:none!important}
+body.embedded main{margin-left:0}
+body.embedded .shell{max-width:none;padding:25px 26px 45px}
+body.embedded .availability{display:none}
+body.embedded .page-heading{margin-bottom:19px}
+body.embedded .back{margin-bottom:10px}
+body.embedded .panel{margin-bottom:16px}
+@media(max-width:1100px){body.embedded .metrics{grid-template-columns:1fr 1.5fr}body.embedded .ticket-group{grid-column:1/-1}}
