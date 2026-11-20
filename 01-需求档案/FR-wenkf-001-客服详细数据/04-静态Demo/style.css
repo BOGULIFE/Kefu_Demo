@@ -7,3 +7,6 @@
 
 .history-metrics{display:flex;gap:20px;align-items:center}.history-metrics .alltime{min-width:175px}.satisfaction-number{font-size:27px}.satisfaction-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px;gap:12px}.satisfaction-row strong{font-size:22px;color:var(--orange-dark)}
 @media(max-width:1250px){.identity-panel{flex-wrap:wrap;gap:22px}.history-metrics{margin-left:auto}}@media(max-width:760px){.history-metrics{width:100%;margin:0;gap:14px}.history-metrics .alltime{min-width:0;flex:1}.satisfaction-number{font-size:24px}}
+
+/* Satisfaction follows bad ratings in the same metric row. */
+.evaluation-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(82px,1.2fr);gap:10px}.evaluation-bottom .metric-label{font-size:11px;white-space:nowrap}.satisfaction-item .mini-num{color:var(--orange-dark);font-variant-numeric:tabular-nums}.daily{min-width:1040px}

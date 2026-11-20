@@ -2,7 +2,7 @@
 // Do not assign new requirement IDs automatically; the requirement owner supplies each ID.
 window.DELIVERY_REQUIREMENTS=[{
  id:'FR-wenkf-001',name:'客服累计接待与详细数据',description:'从今日服务数据，延伸到单客服历史汇总、每日记录与Excel导出。',
- status:'待评审',updated:'2026-11-19',version:'V1.0',business:'在线客服',
+ status:'待评审',updated:'2026-11-20',version:'V1.0',business:'在线客服',
  scope:'仅当前组织 · 沿用客服列表模块权限',
  documents:[{name:'需求单',file:'../01-需求档案/FR-wenkf-001-客服详细数据/01-需求单/需求单.md',description:'业务背景、需求范围与确认口径'},{name:'PRD',file:'../01-需求档案/FR-wenkf-001-客服详细数据/02-PRD/PRD.md',description:'功能规则、统计口径与验收标准'},{name:'UX设计需求表',file:'../01-需求档案/FR-wenkf-001-客服详细数据/03-UX设计/UX设计需求表.md',description:'页面、模块、交互及状态要求'}],
  clients:[{id:'admin',name:'管理后台',icon:'▣',viewport:'desktop',rules:[
@@ -13,7 +13,7 @@ window.DELIVERY_REQUIREMENTS=[{
  {title:'接待与评价怎么算',items:[
  '接待按会话次数计，同一客服对同一会话只计1次；转接时，实际接待过的客服各计1次。',
  '接待按该客服首次开始接待的日期统计；评价按提交日期统计，归属最后接待的客服。',
- '好评为4—5星，中评为3星，差评为1—2星。满意率=好评数÷评价总数×100%，保留两位小数，无评价显示—。历史满意率不受筛选影响，范围满意率按所选日期计算，两者均纳入导出汇总。'
+ '好评为4—5星，中评为3星，差评为1—2星。满意率=好评数÷评价总数×100%，保留两位小数，无评价显示—。历史满意率不受筛选影响，范围满意率按所选日期计算，两者均纳入导出汇总。每日记录在评价数右侧展示当日满意率，并同步导出；评价汇总中的满意率与好评、中评、差评同行。'
  ]},
  {title:'工单怎么算',items:[
  '工单按创建日期筛选，展示当前状态；创建工单数只计本人创建的工单。',
