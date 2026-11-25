@@ -1,0 +1,4 @@
+interface:
+  display_name: "kefu-ux-requirements · 在线客服 UX 需求"
+  short_description: "将在线客服 PRD 转换为包含页面、交互和关键状态的 UX 设计需求表。"
+  default_prompt: "请使用 $kefu-ux-requirements 将目标需求的 PRD 整理为 UX 设计需求表。"

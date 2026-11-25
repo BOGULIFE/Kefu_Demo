@@ -1,0 +1,4 @@
+interface:
+  display_name: "kefu-delivery-integration · 在线客服交付集成"
+  short_description: "将已完成的 Demo 与文档接入交付中心，配置场景、流程和各端需求规则。"
+  default_prompt: "请使用 $kefu-delivery-integration 将目标需求的 Demo 和文档接入本地交付中心。"

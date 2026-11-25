@@ -1,0 +1,4 @@
+interface:
+  display_name: "kefu-prd · 在线客服 PRD"
+  short_description: "基于已确认需求单编写或修订在线客服 PRD，明确业务规则与验收标准。"
+  default_prompt: "请使用 $kefu-prd 基于已确认的需求单生成或更新 PRD。"

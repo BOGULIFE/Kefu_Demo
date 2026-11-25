@@ -1,0 +1,4 @@
+interface:
+  display_name: "kefu-static-demo · 在线客服静态 Demo"
+  short_description: "基于 PRD 与 UX 需求生成可离线打开的交互 HTML Demo，并验证主要流程。"
+  default_prompt: "请使用 $kefu-static-demo 基于目标需求的 PRD 和 UX 需求生成或修订静态 Demo。"

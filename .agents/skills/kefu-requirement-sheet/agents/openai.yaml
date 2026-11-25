@@ -1,0 +1,4 @@
+interface:
+  display_name: "kefu-requirement-sheet · 在线客服需求单"
+  short_description: "整理在线客服业务诉求、使用角色、操作路径与边界，生成需求单。"
+  default_prompt: "请使用 $kefu-requirement-sheet 整理本次在线客服需求并生成或更新需求单。"
