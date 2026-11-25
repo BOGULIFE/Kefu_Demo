@@ -605,3 +605,498 @@ window.DELIVERY_REQUIREMENTS.push({
     ]
   }
 });
+
+// FR-wenkf-003: admin only; initial status reflects delivery review.
+window.DELIVERY_REQUIREMENTS.push({
+  "id": "FR-wenkf-003",
+  "name": "每日高频咨询与回复话术总结",
+  "description": "按日归纳人工客服聊天Top 5及实际回复，查看昨日并回查已保存的历史单日。",
+  "status": "待评审",
+  "updated": "2026-11-25",
+  "version": "V1.0",
+  "business": "在线客服",
+  "scope": "仅管理后台 · 当前组织 · 数据统计权限",
+  "documents": [
+    {
+      "name": "需求单",
+      "file": "../01-需求档案/FR-wenkf-003-每日高频咨询/01-需求单/需求单.md",
+      "description": "已确认业务范围与日期边界"
+    },
+    {
+      "name": "PRD",
+      "file": "../01-需求档案/FR-wenkf-003-每日高频咨询/02-PRD/PRD.md",
+      "description": "生成、保存、权限及异常方案（待评审）"
+    },
+    {
+      "name": "UX设计需求表",
+      "file": "../01-需求档案/FR-wenkf-003-每日高频咨询/03-UX设计/UX设计需求表.md",
+      "description": "页面、单日导航与状态设计"
+    }
+  ],
+  "clients": [
+    {
+      "id": "admin",
+      "name": "管理后台",
+      "icon": "▣",
+      "viewport": "desktop",
+      "rules": [
+        {
+          "title": "入口、权限与组织",
+          "items": [
+            "管理后台沿用数据统计权限，仅查看当前组织全部人工客服聊天的总结，不限本人接待；H5和用户端无新增入口。",
+            "沿用现有「管理与运营 → 数据统计」，服务数据概览在前，昨日高频咨询在其下方；模块右上角进入独立历史页。",
+            "切换组织或识别到权限撤销时立即撤下旧内容，旧请求不能覆盖当前组织结果。"
+          ]
+        },
+        {
+          "title": "总结范围与排名",
+          "items": [
+            "按北京时间消息发送时间截取前一自然日文本，含00:00起点、不含次日00:00；不按会话开始或结束日期归日。",
+            "仅分析人工客服与用户的聊天文本，不纳入工单、图片、语音或知识库答案。",
+            "同类问题合并，按涉及会话数排序取最多5类；同一会话同类问题当日只计1次，不足5类按实际展示。",
+            "同一会话不同问题分别计数，转接不重复计数；同频保持固定顺序，页面不增加频次列。"
+          ]
+        },
+        {
+          "title": "回复话术",
+          "items": [
+            "每个问题仅归纳统计日内客服实际回复，保留适用条件及限制，不虚构承诺，不跨日补全。",
+            "无对应回复时提示「暂无可归纳的客服回复」；不原样展示个人信息，长话术可展开阅读。",
+            "生成后直接展示，无人工审核；不增加自动回复、快捷应用或知识库写入。"
+          ]
+        },
+        {
+          "title": "每日生成与保存",
+          "items": [
+            "每日凌晨自动生成，前一日总结应于次日02:00前可查看，任务不依赖打开页面。",
+            "从上线日逐日保存；首份在上线次日生成，覆盖上线日完整自然日，包含上线时刻之前的当日文本；不补算上线日前历史。",
+            "同组织同日期仅一份可见结果，查看与刷新只读取保存结果；失败和重复任务不能覆盖已成功或已完成无数据结果。"
+          ]
+        },
+        {
+          "title": "历史日期与恢复",
+          "items": [
+            "历史仅支持上线日至昨日的单日查看，禁止今日、未来和上线日前日期，不合并多日总结。",
+            "日期列表倒序每页20日，选择日期立即查询并定位所在页；翻页选该页首日，刷新保留合法日期及页码，返回统计页重查昨日。",
+            "待生成、生成中、无咨询、生成失败和查询失败分别展示；02:00后未成功标明未按计划完成，不拿前天结果冒充昨日。",
+            "同日刷新失败可保留上次读取结果并明确标注；换日撤下旧详情，非法日期和翻页失败保留原有效选择。",
+            "后台自动重试补齐原组织原日期；页面刷新只查询，无手动重生成、导出、个人排行或跨组织总榜。"
+          ]
+        }
+      ],
+      "scenes": [
+        {
+          "id": "success",
+          "name": "昨日高频咨询",
+          "description": "服务概览下方展示Top 5及长话术",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=success"
+        },
+        {
+          "id": "history",
+          "name": "历史高频咨询",
+          "description": "单日查看、20日分页及返回昨日",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=history"
+        },
+        {
+          "id": "history-page-two",
+          "name": "历史指定日期",
+          "description": "深链接直达第二页2026-11-04",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=success&view=history&date=2026-11-04"
+        },
+        {
+          "id": "three",
+          "name": "不足5类",
+          "description": "按实际3类展示",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=three"
+        },
+        {
+          "id": "tie",
+          "name": "同频稳定排名",
+          "description": "保存顺序固定，不展示频次",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=tie"
+        },
+        {
+          "id": "crossday",
+          "name": "跨日与缺失回复",
+          "description": "不使用次日回复补全当日话术",
+          "category": "主要场景",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=crossday"
+        },
+        {
+          "id": "pending",
+          "name": "待生成",
+          "description": "01:20尚未生成",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=pending"
+        },
+        {
+          "id": "generating",
+          "name": "生成中",
+          "description": "真实生成状态与查询加载分开",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=generating"
+        },
+        {
+          "id": "empty",
+          "name": "当日无咨询",
+          "description": "完成但无有效咨询",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=empty"
+        },
+        {
+          "id": "failed",
+          "name": "生成失败",
+          "description": "02:00后未按计划完成",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=failed"
+        },
+        {
+          "id": "overdue",
+          "name": "生成超时",
+          "description": "超时保留真实生成中状态",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=overdue"
+        },
+        {
+          "id": "first",
+          "name": "上线当天",
+          "description": "首份未到，日期控件禁用",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=first"
+        },
+        {
+          "id": "firstNext",
+          "name": "上线次日首份",
+          "description": "覆盖上线日完整自然日",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=firstNext"
+        },
+        {
+          "id": "loading",
+          "name": "查询加载中",
+          "description": "不显示其他日期结果",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=loading"
+        },
+        {
+          "id": "readError",
+          "name": "首次读取失败",
+          "description": "重试恢复读取",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=readError"
+        },
+        {
+          "id": "staleError",
+          "name": "同日刷新失败",
+          "description": "保留上次结果并标注",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=staleError"
+        },
+        {
+          "id": "pageError",
+          "name": "历史翻页失败",
+          "description": "保留原页与日期，支持重试",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=pageError"
+        },
+        {
+          "id": "permission",
+          "name": "无数据统计权限",
+          "description": "撤下受限内容",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=permission"
+        },
+        {
+          "id": "orgRace",
+          "name": "组织切换竞态",
+          "description": "切组织后忽略过期响应",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=orgRace"
+        },
+        {
+          "id": "midnight",
+          "name": "跨北京时间零点",
+          "description": "推进时钟后刷新重算昨日",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=midnight"
+        },
+        {
+          "id": "recovered",
+          "name": "后台自动补齐",
+          "description": "所属日期不变，刷新只读结果",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=recovered"
+        },
+        {
+          "id": "protected",
+          "name": "成功结果保护",
+          "description": "后续失败不能覆盖已完成结果",
+          "category": "状态与异常",
+          "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=protected"
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "title": "每日高频咨询生成与历史回查流程",
+    "description": "系统自动归纳和保存，后台校验权限后读取昨日或历史单日；异常分开恢复。",
+    "height": 900,
+    "nodes": [
+      {
+        "id": "day",
+        "x": 410,
+        "y": 25,
+        "w": 280,
+        "h": 66,
+        "label": "系统：北京时间自然日结束",
+        "sub": "按组织及消息发送时间截取当日文本",
+        "client": "admin",
+        "scene": "",
+        "kind": "system"
+      },
+      {
+        "id": "ai",
+        "x": 410,
+        "y": 135,
+        "w": 280,
+        "h": 66,
+        "label": "系统：归并问题与实际回复",
+        "sub": "会话去重、固定排名、最多5类",
+        "client": "admin",
+        "scene": "",
+        "kind": "system"
+      },
+      {
+        "id": "decision",
+        "x": 410,
+        "y": 245,
+        "w": 280,
+        "h": 66,
+        "label": "校验：是否完整生成",
+        "sub": "不展示半成品，不用失败覆盖成功",
+        "client": "admin",
+        "scene": "",
+        "kind": "decision"
+      },
+      {
+        "id": "fail",
+        "x": 35,
+        "y": 245,
+        "w": 280,
+        "h": 66,
+        "label": "生成失败／超时",
+        "sub": "02:00后标明未按计划完成",
+        "client": "admin",
+        "scene": "failed",
+        "kind": "blocked"
+      },
+      {
+        "id": "save",
+        "x": 410,
+        "y": 355,
+        "w": 280,
+        "h": 66,
+        "label": "系统：保存所属日期结果",
+        "sub": "含成功及无咨询；同组织同日一份",
+        "client": "admin",
+        "scene": "empty",
+        "kind": "system"
+      },
+      {
+        "id": "retry",
+        "x": 35,
+        "y": 355,
+        "w": 280,
+        "h": 66,
+        "label": "系统：自动重试补齐原日期",
+        "sub": "不改变组织及所属日，刷新仅查询",
+        "client": "admin",
+        "scene": "recovered",
+        "kind": "system"
+      },
+      {
+        "id": "access",
+        "x": 410,
+        "y": 465,
+        "w": 280,
+        "h": 66,
+        "label": "账号：校验数据统计权限",
+        "sub": "仅当前组织，组织切换撤下旧内容",
+        "client": "admin",
+        "scene": "orgRace",
+        "kind": "decision"
+      },
+      {
+        "id": "denied",
+        "x": 785,
+        "y": 465,
+        "w": 280,
+        "h": 66,
+        "label": "权限不足：撤下受限内容",
+        "sub": "返回可访问页面，不保留旧内容",
+        "client": "admin",
+        "scene": "permission",
+        "kind": "blocked"
+      },
+      {
+        "id": "yesterday",
+        "x": 410,
+        "y": 575,
+        "w": 280,
+        "h": 66,
+        "label": "运营：查看昨日高频咨询",
+        "sub": "先服务概览，再阅读问题与对应话术",
+        "client": "admin",
+        "scene": "success",
+        "kind": "action"
+      },
+      {
+        "id": "history",
+        "x": 410,
+        "y": 685,
+        "w": 280,
+        "h": 66,
+        "label": "运营：回查历史单日",
+        "sub": "上线日至昨日，每页20个日期",
+        "client": "admin",
+        "scene": "history",
+        "kind": "action"
+      },
+      {
+        "id": "readFail",
+        "x": 35,
+        "y": 685,
+        "w": 280,
+        "h": 66,
+        "label": "查询失败：保留有效选择",
+        "sub": "同日保留结果并标注；可重试",
+        "client": "admin",
+        "scene": "staleError",
+        "kind": "blocked"
+      },
+      {
+        "id": "back",
+        "x": 410,
+        "y": 795,
+        "w": 280,
+        "h": 66,
+        "label": "运营：选择日期／返回昨日",
+        "sub": "读取保存结果，不调用AI重新生成",
+        "client": "admin",
+        "scene": "history-page-two",
+        "kind": "action"
+      }
+    ],
+    "edges": [
+      {
+        "d": "M550 91 V135",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 201 V245",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 421 V465",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 641 V685",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 751 V795",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M550 311 V355",
+        "label": "完整",
+        "x": 580,
+        "y": 338,
+        "negative": false
+      },
+      {
+        "d": "M410 278 H315",
+        "label": "失败",
+        "x": 360,
+        "y": 264,
+        "negative": true
+      },
+      {
+        "d": "M175 311 V355",
+        "label": "",
+        "x": 0,
+        "y": 0,
+        "negative": false
+      },
+      {
+        "d": "M175 355 V168 H410",
+        "label": "自动重试",
+        "x": 210,
+        "y": 190,
+        "negative": false
+      },
+      {
+        "d": "M690 498 H785",
+        "label": "无权限",
+        "x": 738,
+        "y": 485,
+        "negative": true
+      },
+      {
+        "d": "M550 531 V575",
+        "label": "通过",
+        "x": 580,
+        "y": 559,
+        "negative": false
+      },
+      {
+        "d": "M410 718 H315",
+        "label": "读取失败",
+        "x": 355,
+        "y": 704,
+        "negative": true
+      },
+      {
+        "d": "M175 685 V608 H410",
+        "label": "重试读取",
+        "x": 220,
+        "y": 594,
+        "negative": false
+      },
+      {
+        "d": "M690 828 H735 V608 H690",
+        "label": "返回昨日",
+        "x": 790,
+        "y": 721,
+        "negative": false
+      }
+    ],
+    "notes": [
+      "按北京时间消息时间归日，同会话同类问题每日去重；仅归纳当日实际回复。",
+      "首份覆盖上线日完整自然日，次日02:00前提供；不补算上线日前历史。",
+      "查看与刷新只读取保存结果，后台自动重试失败日期，成功结果受保护。",
+      "待评审包含PRD与UX的方案设计；本Demo不实现真实AI、调度、数据库或权限服务。"
+    ]
+  }
+});
