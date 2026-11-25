@@ -14,7 +14,7 @@
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const shift=(d,n)=>new Date(Date.parse(d+'T00:00:00Z')+n*86400000).toISOString().slice(0,10);
 const days=(a,b)=>Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/86400000);
-const scenes={success:'昨日成功 · Top 5',three:'实际3类 · 不补足',tie:'第5/6名同频 · 固定顺序',missing:'单项回复缺失',crossday:'跨日提问 · 次日回复不补入',history:'历史日期 · 20日分页',pending:'待生成 · 02:00前',generating:'生成中 · 02:00前',empty:'当日无有效咨询',failed:'生成失败 · 已超时',overdue:'生成中 · 已超时',first:'上线当天 · 首份未到',firstNext:'上线次日 · 首份完整自然日',loading:'查询加载中',readError:'首次读取失败',staleError:'同日刷新失败 · 保留旧结果',pageError:'下一次日期翻页失败',permission:'无数据统计权限',orgRace:'切组织 · 旧请求晚返回',midnight:'跨零点 · 刷新切昨日',recovered:'失败日已自动补齐',protected:'成功保存后重复任务失败'};
+const scenes={success:'昨日成功 · Top 10',three:'实际3类 · 不补足',tie:'第10/11名同频 · 固定顺序',missing:'单项回复缺失',crossday:'跨日提问 · 次日回复不补入',history:'历史日期 · 20日分页',pending:'待生成 · 02:00前',generating:'生成中 · 02:00前',empty:'当日无有效咨询',failed:'生成失败 · 已超时',overdue:'生成中 · 已超时',first:'上线当天 · 首份未到',firstNext:'上线次日 · 首份完整自然日',loading:'查询加载中',readError:'首次读取失败',staleError:'同日刷新失败 · 保留旧结果',pageError:'下一次日期翻页失败',permission:'无数据统计权限',orgRace:'切组织 · 旧请求晚返回',midnight:'跨零点 · 刷新切昨日',recovered:'失败日已自动补齐',protected:'成功保存后重复任务失败'};
 const params=new URLSearchParams(location.search);
 const state={view:params.get('view')==='history'?'history':'stats',scene:scenes[params.get('scene')]?params.get('scene'):'success',org:params.get('org')==='b'?'b':'a',today:'2026-11-25',clock:'10:30:00',date:'2026-11-24',target:'2026-11-24',page:1,loading:false,readError:false,stale:false,permission:true,refreshFail:false,pageFail:false,listError:false,expanded:new Set(),recovered:new Set(),draftError:'',statsRange:'全部',statsScroll:0};
 let requestId=0,toastTimer;
@@ -33,21 +33,26 @@ const qa=[
  {id:'reward',n:24,q:'活动奖励为什么还没有发放？',a:'请先确认活动页面的参与条件和奖励发放时间。已满足条件且超过页面标明发放时间的，可提供活动名称及参与记录，由客服协助核查；尚未达到发放时间的，请等待页面约定时间。'},
  {id:'login',n:18,q:'登录时提示验证码无效，该怎么办？',a:'请确认使用的是最近一次收到的验证码，并在有效期内输入。验证码过期时可重新获取，避免连续重复提交；如仍无法登录，请提供页面提示，由人工客服协助排查。'},
  {id:'progress',n:12,q:'提交的问题如何查看处理进度？',a:'可在「我的反馈」中查看对应记录及最新状态。如暂未更新，请保留记录编号并联系人工客服核实；客服未承诺具体完成时间。'},
- {id:'invoice',n:12,q:'如何申请开具发票？',a:'可提供对应订单编号，由客服核对是否满足开票条件。'}
+ {id:'invoice',n:11,q:'如何申请开具发票？',a:'可提供对应订单编号，由客服核对是否满足开票条件。'},
+ {id:'profile',n:9,q:'如何修改个人资料？',a:'可在个人设置中修改允许编辑的资料；无法自行修改的字段，请联系人工客服核实处理。'},
+ {id:'notice',n:8,q:'为什么没有收到消息通知？',a:'请先检查应用通知权限和消息设置。如权限已开启仍未收到，可提供发生时间，由客服协助排查。'},
+ {id:'cancel',n:7,q:'已经提交的申请可以撤回吗？',a:'请先查看申请当前状态；页面有撤回入口时可按提示操作，没有入口时需由人工客服核实是否仍可撤回。'},
+ {id:'verify',n:6,q:'身份核验未通过，如何处理？',a:'请核对提交的信息是否清晰且一致，按页面提示补充资料；仍未通过时可联系人工客服核实原因。'},
+ {id:'receipt',n:6,q:'如何查询历史操作记录？',a:'可在相关业务页面查找历史记录，若无法找到对应记录，请提供大致操作时间，由人工客服协助查询。'}
 ];
 function record(date=state.date){
  let status='success',variant='success';const delta=days(date,'2026-11-24');
  if(delta===1)variant='three';if(delta===2)status='empty';if(delta===3)status='failed';if(delta===4)status='pending';
  if(date===state.target){if(['pending','generating','empty','failed'].includes(state.scene))status=state.scene;if(state.scene==='overdue')status='generating';if(['three','missing','crossday','tie'].includes(state.scene))variant=state.scene;if(state.scene==='recovered')status='success';}
  if(state.recovered.has(state.org+':'+date))status='success';
- let items=qa.map(x=>({...x}));if(state.org==='b')items=items.map((x,i)=>({...x,q:['如何查询订单的配送进度？','收到的商品与订单不符如何处理？','如何修改订单的收货信息？','订单取消后退款如何查看？','优惠券为何无法使用？','如何申请开具发票？'][i],a:['可在订单详情查看物流轨迹。如物流长时间未更新，请提供订单编号，由客服协助联系配送方核实。','请保留商品及包装，并通过订单售后入口提交情况说明，客服核实后按订单规则处理。','尚未出库的订单，可联系人工客服核查是否仍可修改；已出库的订单需先核实配送状态，不能保证更改成功。','请查看订单退款状态，实际到账时间以支付渠道处理情况为准。','请核对优惠券的适用商品、有效期与使用条件，不满足条件时无法抵扣。','可提供对应订单编号，由客服核对开票条件。'][i],long:false}));
- items.sort((a,b)=>b.n-a.n||qa.findIndex(x=>x.id===a.id)-qa.findIndex(x=>x.id===b.id));items=items.slice(0,variant==='three'?3:5);
+ let items=qa.map(x=>({...x}));if(state.org==='b')items=items.map((x,i)=>({...x,q:['如何查询订单的配送进度？','收到的商品与订单不符如何处理？','如何修改订单的收货信息？','订单取消后退款如何查看？','优惠券为何无法使用？','如何申请开具发票？','如何申请商品退货？','订单物流显示签收但未收到怎么办？','如何查询售后申请的进度？','付款成功但订单未更新怎么办？','如何查询历史订单？'][i],a:['可在订单详情查看物流轨迹。如物流长时间未更新，请提供订单编号，由客服协助联系配送方核实。','请保留商品及包装，并通过订单售后入口提交情况说明，客服核实后按订单规则处理。','尚未出库的订单，可联系人工客服核查是否仍可修改；已出库的订单需先核实配送状态，不能保证更改成功。','请查看订单退款状态，实际到账时间以支付渠道处理情况为准。','请核对优惠券的适用商品、有效期与使用条件，不满足条件时无法抵扣。','可提供对应订单编号，由客服核对开票条件。','请在订单售后入口查看退货条件并提交申请，具体以订单适用规则为准。','请先核实是否由他人代收，仍未找到时可联系人工客服协助查询配送情况。','可在订单售后记录中查看状态，尚未更新时可提供申请编号由客服核实。','请勿重复付款，可提供订单编号与支付状态，由客服核实订单同步情况。','可在我的订单按日期查找记录，无法找到时可联系人工客服核实。'][i],long:false}));
+ items.sort((a,b)=>b.n-a.n||qa.findIndex(x=>x.id===a.id)-qa.findIndex(x=>x.id===b.id));items=items.slice(0,variant==='three'?3:10);
  if(['missing','crossday'].includes(variant)){items[items.length-1].q='深夜提交的账号异常问题如何处理？';items[items.length-1].a='';items[items.length-1].long=false;}
  const late=state.recovered.has(state.org+':'+date)||state.scene==='recovered'&&date===state.target;
  return {status,items,completed:(late?state.today:shift(date,1))+(late?' 10:20:16':' 01:26:18'),late};
 }
 function badge(status){const labels={success:'已生成',empty:'无数据',pending:'待生成',generating:'生成中',failed:'生成失败'};return '<span class="pill '+({success:'ok',failed:'bad',generating:'warn'}[status]||'')+'">'+labels[status]+'</span>'}
-function info(){return `<div class="intro">按当前组织全部人工客服聊天总结，仅含所属日期内文本；按涉及会话数去重排序，最多5类。话术归纳自客服实际回复。<br><details><summary>统计说明</summary><ul><li>范围为当前组织全部人工客服与用户的聊天文本，不限本人接待；不含工单、图片、语音和机器人数据。</li><li>按北京时间消息发送时间取所属日00:00（含）至次日00:00（不含）。跨日会话仅看当日文本，不跨日补全回复。</li><li>同一会话同类问题当日只计1次；同一会话可计入多类，转接不重复。同频按保存的固定次序排序，最多5类，不足不补齐，不提供合计数。</li><li>仅归纳同日客服实际回复，保留适用条件，不使用知识库补充；没有对应回复时明确提示。</li><li>每日凌晨自动处理前一自然日，次日02:00前可查看。刷新仅查询保存结果。</li><li>本组织演示上线日为${launch()}；首份覆盖上线当天完整自然日，包括上线前的当天文本，不补算上线日前日期。</li></ul></details></div>`}
+function info(){return `<div class="intro">按当前组织全部人工客服聊天总结，仅含所属日期内文本；按涉及会话数去重排序，最多10类。话术归纳自客服实际回复。<br><details><summary>统计说明</summary><ul><li>范围为当前组织全部人工客服与用户的聊天文本，不限本人接待；不含工单、图片、语音和机器人数据。</li><li>按北京时间消息发送时间取所属日00:00（含）至次日00:00（不含）。跨日会话仅看当日文本，不跨日补全回复。</li><li>同一会话同类问题当日只计1次；同一会话可计入多类，转接不重复。同频按保存的固定次序排序，最多10类，不足不补齐，不提供合计数。</li><li>仅归纳同日客服实际回复，保留适用条件，不使用知识库补充；没有对应回复时明确提示。</li><li>每日凌晨自动处理前一自然日，次日02:00前可查看。刷新仅查询保存结果。</li><li>本组织演示上线日为${launch()}；首份覆盖上线当天完整自然日，包括上线前的当天文本，不补算上线日前日期。</li></ul></details></div>`}
 function emptyState(title,desc,icon='◷',retry=false){return `<div class="state"><div class="stateicon" aria-hidden="true">${icon}</div><h3>${title}</h3><p>${desc}</p>${retry?'<button data-retry>重试</button>':''}</div>`}
 function content(){
  const r=record();if(state.loading&&!state.stale)return emptyState('加载中…','正在读取所选日期的保存结果，请稍候。');

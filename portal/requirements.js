@@ -610,7 +610,7 @@ window.DELIVERY_REQUIREMENTS.push({
 window.DELIVERY_REQUIREMENTS.push({
   "id": "FR-wenkf-003",
   "name": "每日高频咨询与回复话术总结",
-  "description": "按日归纳人工客服聊天Top 5及实际回复，查看昨日并回查已保存的历史单日。",
+  "description": "按日归纳人工客服聊天Top 10及实际回复，查看昨日并回查已保存的历史单日。",
   "status": "待评审",
   "updated": "2026-11-25",
   "version": "V1.0",
@@ -653,7 +653,7 @@ window.DELIVERY_REQUIREMENTS.push({
           "items": [
             "按北京时间消息发送时间截取前一自然日文本，含00:00起点、不含次日00:00；不按会话开始或结束日期归日。",
             "仅分析人工客服与用户的聊天文本，不纳入工单、图片、语音或知识库答案。",
-            "同类问题合并，按涉及会话数排序取最多5类；同一会话同类问题当日只计1次，不足5类按实际展示。",
+            "同类问题合并，按涉及会话数排序取最多10类；同一会话同类问题当日只计1次，不足10类按实际展示。",
             "同一会话不同问题分别计数，转接不重复计数；同频保持固定顺序，页面不增加频次列。"
           ]
         },
@@ -688,7 +688,7 @@ window.DELIVERY_REQUIREMENTS.push({
         {
           "id": "success",
           "name": "昨日高频咨询",
-          "description": "服务概览下方展示Top 5及长话术",
+          "description": "服务概览下方展示Top 10及长话术",
           "category": "主要场景",
           "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=success"
         },
@@ -708,7 +708,7 @@ window.DELIVERY_REQUIREMENTS.push({
         },
         {
           "id": "three",
-          "name": "不足5类",
+          "name": "不足10类",
           "description": "按实际3类展示",
           "category": "主要场景",
           "url": "../01-需求档案/FR-wenkf-003-每日高频咨询/04-静态Demo/FR-wenkf-003-每日高频咨询Demo.html?scene=three"
@@ -866,7 +866,7 @@ window.DELIVERY_REQUIREMENTS.push({
         "w": 280,
         "h": 66,
         "label": "系统：归并问题与实际回复",
-        "sub": "会话去重、固定排名、最多5类",
+        "sub": "会话去重、固定排名、最多10类",
         "client": "admin",
         "scene": "",
         "kind": "system"
