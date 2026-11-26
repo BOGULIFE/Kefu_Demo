@@ -55,6 +55,8 @@ window.DELIVERY_REQUIREMENTS=[{
  ]}
 }];
 
+
+
 window.DELIVERY_REQUIREMENTS.push({
   "id": "FR-wenkf-002",
   "name": "用户提交工单与统一工单处理",
@@ -607,6 +609,8 @@ window.DELIVERY_REQUIREMENTS.push({
 });
 
 // FR-wenkf-003: admin only; initial status reflects delivery review.
+
+
 window.DELIVERY_REQUIREMENTS.push({
   "id": "FR-wenkf-003",
   "name": "每日高频咨询与回复话术总结",
@@ -1100,3 +1104,42 @@ window.DELIVERY_REQUIREMENTS.push({
     ]
   }
 });
+
+window.DELIVERY_REQUIREMENTS.push({
+ id:'FR-wenkf-004',name:'工单模板用户工单导出',description:'在工单类型配置的每个模板操作区新增导出，按状态与提交日期生成完整用户工单Excel。',
+ status:'待评审',updated:'2026-11-26',version:'V1.0',business:'在线客服',scope:'仅当前组织 · 管理后台管理员 · 用户提交来源 · 单模板',
+ documents:[
+  {name:'需求单',file:'../01-需求档案/FR-wenkf-004-工单模板导出/01-需求单/需求单.md',description:'背景、范围、角色与业务口径'},
+  {name:'PRD',file:'../01-需求档案/FR-wenkf-004-工单模板导出/02-PRD/PRD.md',description:'导出规则、数据快照、Excel与异常反馈'},
+  {name:'UX设计需求表',file:'../01-需求档案/FR-wenkf-004-工单模板导出/03-UX设计/UX设计需求表.md',description:'页面、交互和状态要求'}
+ ],
+ clients:[{id:'admin',name:'管理后台',icon:'▣',viewport:'desktop',rules:[
+  {title:'入口与权限',items:['路径为客服后台→工单处理→工单类型配置，每个可访问模板右侧操作提供「导出」。','仅当前组织管理员可导出；普通客服、模板处理人及H5不新增导出入口。模板按稳定标识绑定，模板重名或改名不串模板。']},
+  {title:'筛选与范围',items:['处理中、已完结为或关系，默认全选且至少选择一项；状态按确认时当前状态判断。','提交日期默认全部；自定义时开始和结束均必填，按北京时间包含首尾日，开始不得晚于结束。模板、组织、用户提交来源、状态和日期共同筛选，跨页取全部符合记录。']},
+  {title:'Excel内容',items:['一次导出一个模板，一条工单一行，按提交时间升序；固定列为提交用户ID、工单状态、当前负责人、提交日期。','随后输出当前字段，再输出历史已删除字段；按稳定字段身份区分改名、删除重建和同名字段，空值保持为空。','图片和视频以完整URL在同一单元格逐行保留，不嵌入媒体；用户ID、文本和公式样式输入按文本保存。']},
+  {title:'生成与异常',items:['确认时冻结符合条件的记录、当前负责人、状态、答案和字段顺序；生成中锁定条件，成功后显示条数并由用户主动下载。','无匹配不生成文件并保留条件；生成失败可重试，下载重试使用同一结果；重新导出才获取新快照。数量上限按配置整次拦截，不截断。']},
+  {title:'边界',items:['不支持多模板、跨组织、客服创建来源、H5导出、附件打包、定时任务或独立任务中心。','本静态Demo使用固定模拟数据与虚构附件URL，不验证真实权限、5000条上限或媒体生命周期。']}
+ ],scenes:[
+  {id:'list',name:'模板配置',description:'工单类型配置与模板操作入口',category:'主要场景',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=list'},
+  {id:'export',name:'导出条件',description:'选择状态与提交日期并确认生成',category:'主要场景',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=export'},
+  {id:'empty',name:'无匹配工单',description:'无结果反馈并保留筛选条件',category:'状态与异常',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=empty'},
+  {id:'fail',name:'导出失败与重试',description:'失败提示、保留条件与重试成功',category:'状态与异常',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=fail'},
+  {id:'permission',name:'普通客服无权限',description:'无导出入口的权限边界',category:'权限与加载',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=permission'},
+  {id:'loading',name:'列表加载中',description:'模板列表加载状态',category:'权限与加载',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=loading'},
+  {id:'list-error',name:'列表加载失败',description:'列表错误与重试恢复',category:'权限与加载',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=list-error'},
+  {id:'no-templates',name:'无模板',description:'无可导出模板的空态',category:'权限与加载',url:'../01-需求档案/FR-wenkf-004-工单模板导出/04-静态Demo/FR-wenkf-004-工单模板导出Demo.html?scene=no-templates'}
+ ]}],
+ flow:{title:'工单模板用户工单导出流程',description:'管理员从模板操作进入导出条件，系统校验范围并生成可下载的Excel。',height:760,notes:['确认时按当前组织、稳定模板、用户提交来源、状态与提交日期取一致快照。','无结果、超出可配置上限或生成失败均不生成部分文件；保留条件或提供重试。','本Demo仅展示管理后台原型，不实现真实权限、数据服务及5000条上限。'],nodes:[
+  {id:'enter',x:410,y:25,w:280,h:66,label:'管理员：打开模板配置',sub:'定位一个模板的右侧操作',client:'admin',scene:'list',kind:'action'},
+  {id:'export',x:410,y:135,w:280,h:66,label:'管理员：点击导出',sub:'打开目标模板条件弹窗',client:'admin',scene:'export',kind:'action'},
+  {id:'check',x:410,y:245,w:280,h:66,label:'系统：校验权限与筛选条件',sub:'管理员、组织、模板、状态、日期',client:'admin',scene:'export',kind:'system'},
+  {id:'empty',x:35,y:355,w:280,h:66,label:'无匹配／超出上限',sub:'不生成文件，调整条件后重试',client:'admin',scene:'empty',kind:'blocked'},
+  {id:'generate',x:410,y:355,w:280,h:66,label:'系统：冻结快照并生成Excel',sub:'锁定条件，按提交时间升序',client:'admin',scene:'export',kind:'system'},
+  {id:'fail',x:35,y:465,w:280,h:66,label:'生成失败',sub:'保留条件，允许再次重试',client:'admin',scene:'fail',kind:'blocked'},
+  {id:'success',x:410,y:465,w:280,h:66,label:'生成成功：显示条数与下载',sub:'下载同一结果，重新导出取新快照',client:'admin',scene:'export',kind:'action'},
+  {id:'denied',x:785,y:245,w:280,h:66,label:'权限或模板失效',sub:'拒绝操作并返回可访问列表',client:'admin',scene:'permission',kind:'blocked'}
+ ],edges:[
+  {d:'M550 91 V135'},{d:'M550 201 V245'},{d:'M550 311 V355',label:'符合条件',x:580,y:338},{d:'M410 278 H315',label:'无结果／超量',x:350,y:264,negative:true},{d:'M690 278 H785',label:'无权限',x:735,y:264,negative:true},{d:'M175 421 V465',label:'生成失败',x:205,y:448,negative:true},{d:'M410 388 H315',label:'失败',x:350,y:375,negative:true},{d:'M550 421 V465',label:'成功',x:580,y:448},{d:'M175 531 V595 H550 V531',label:'重试',x:250,y:575}],
+ }
+});
+
